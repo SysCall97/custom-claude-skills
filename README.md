@@ -5,7 +5,7 @@ Custom skills for [Claude Code](https://claude.ai/code). One skill per git branc
 ## Install
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/SysCall97/claude-skills/main/install.sh | bash -s <skill-name>
+curl -fsSL https://raw.githubusercontent.com/SysCall97/custom-claude-skills/main/install.sh | bash -s <skill-name>
 ```
 
 Drops `SKILL.md` into `~/.claude/skills/<skill-name>/`. Restart Claude Code to pick up.
@@ -13,7 +13,7 @@ Drops `SKILL.md` into `~/.claude/skills/<skill-name>/`. Restart Claude Code to p
 ### Example
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/SysCall97/claude-skills/main/install.sh | bash -s json-skill
+curl -fsSL https://raw.githubusercontent.com/SysCall97/custom-claude-skills/main/install.sh | bash -s json-skill
 ```
 
 ## Available skills
