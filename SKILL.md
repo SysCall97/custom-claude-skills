@@ -38,9 +38,138 @@ It helps you:
 
 Install:
 
+### Linux
+
+Debian / Ubuntu:
+
+```bash
+sudo apt-get install jq
+```
+
+Fedora:
+
+```bash
+sudo dnf install jq
+```
+
+openSUSE:
+
+```bash
+sudo zypper install jq
+```
+
+Arch:
+
+```bash
+sudo pacman -S jq
+```
+
+Prebuilt binaries also available:
+
+- jq 1.8.1 — AMD64, ARM64, i386
+- jq 1.8.0 — AMD64, ARM64, i386
+- jq 1.7.1 — AMD64, ARM64, i386
+- jq 1.7 — AMD64, ARM64, i386
+- jq 1.6 — AMD64, i386
+- jq 1.5 — AMD64, i386
+- jq 1.4 — AMD64, i386
+- jq 1.3 — AMD64, i386
+
+---
+
+### macOS
+
+Homebrew:
+
 ```bash
 brew install jq
 ```
+
+MacPorts:
+
+```bash
+port install jq
+```
+
+Fink:
+
+```bash
+fink install jq
+```
+
+Prebuilt binaries also available:
+
+- jq 1.8.1 — Apple Silicon, Intel Mac
+- jq 1.8.0 — Apple Silicon, Intel Mac
+- jq 1.7.1 — Apple Silicon, Intel Mac
+- jq 1.7 — Apple Silicon, Intel Mac
+- jq 1.6 — AMD64
+- jq 1.5 — AMD64
+- jq 1.4 — AMD64, i386
+- jq 1.3 — AMD64, i386
+
+---
+
+### FreeBSD
+
+Prebuilt package (as root):
+
+```bash
+pkg install jq
+```
+
+From ports (as root):
+
+```bash
+make -C /usr/ports/textproc/jq install clean
+```
+
+---
+
+### Solaris
+
+OpenCSW (Solaris 10+, Sparc and x86):
+
+```bash
+pkgutil -i jq
+```
+
+jq 1.4 binaries available for Solaris 11 AMD64 or i386.
+
+---
+
+### Windows
+
+winget:
+
+```bash
+winget install jqlang.jq
+```
+
+scoop:
+
+```bash
+scoop install jq
+```
+
+Chocolatey:
+
+```bash
+choco install jq
+```
+
+Prebuilt executables also available:
+
+- jq 1.8.1 — AMD64, i386
+- jq 1.8.0 — AMD64, i386
+- jq 1.7.1 — AMD64, i386
+- jq 1.7 — AMD64, i386
+- jq 1.6 — AMD64, i386
+- jq 1.5 — AMD64, i386
+- jq 1.4 — AMD64, i386
+- jq 1.3 — AMD64, i386
+
+---
 
 Check version:
 
