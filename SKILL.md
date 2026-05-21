@@ -1,6 +1,6 @@
 ---
 name: swift-cleaner-lite
-description: Use this skill when the user wants to analyze, clean, or refactor Swift code using idiomatic Swift best practices. Triggers include "clean this Swift file", "refactor Swift", "make this more idiomatic", or any request to improve Swift code quality. Applies four rules — var→let, private(set), didSet refactor, class→struct — one at a time, always asking before each change.
+description: Use this skill when the user wants to analyze, clean, or refactor Swift code using idiomatic Swift best practices. Triggers include "clean this Swift file", "refactor Swift", "make this more idiomatic", or any request to improve Swift code quality. Applies seven rules — var→let, private(set), didSet refactor, class→struct, private funcs, private-helpers extension, public-APIs extension — one at a time, always asking before each change.
 ---
 
 ## When To Use
@@ -60,6 +60,50 @@ Detect any `class` that:
 Convert it to a `struct`.
 - Ask: "Class `ClassName` behaves like a value type. Convert to `struct`?"
 
+### Rule 5 — `func` → `private func`
+Detect any function that:
+- Is never called from outside its own class/struct/file
+- Is not part of a protocol conformance
+- Is not an `@objc`, `@IBAction`, or framework-required entry point
+
+Mark it `private`.
+- Ask: "Function `funcName` is only used internally. Add `private`?"
+
+### Rule 6 — extract private helpers into `// MARK: private helpers` extension
+For each class/struct, collect all `private` functions that are **not already inside another extension**.
+Move them into a single new extension:
+
+```swift
+// MARK: private helpers
+private extension ClassName {
+    // moved private funcs
+}
+```
+
+Constraints:
+- MUST verify each function is currently in the main type body, not under any existing `extension ClassName { ... }`
+- Skip functions already nested in another extension (do not move them)
+- Preserve original order
+- Ask: "Move X private funcs from `ClassName` body into `// MARK: private helpers` extension?"
+
+### Rule 7 — extract public APIs into `// MARK: public APIs` extension
+For each class/struct, collect all `public`/`open`/default-internal functions intended as the type's public surface (non-private, non-fileprivate) that are **not already inside another extension**.
+Move them into a single new extension:
+
+```swift
+// MARK: public APIs
+extension ClassName {
+    // moved public funcs
+}
+```
+
+Constraints:
+- MUST verify each function is currently in the main type body, not under any existing `extension ClassName { ... }`
+- Skip functions already nested in another extension (do not move them)
+- Skip protocol-conformance methods (leave in their conformance extension)
+- Preserve original order
+- Ask: "Move X public funcs from `ClassName` body into `// MARK: public APIs` extension?"
+
 ---
 
 ## Behavior
@@ -100,4 +144,7 @@ Summary
 - Rule 2: 2 applied
 - Rule 3: 0 matches
 - Rule 4: 1 applied
+- Rule 5: 4 applied
+- Rule 6: 1 applied (3 funcs moved)
+- Rule 7: 1 applied (2 funcs moved)
 ```
