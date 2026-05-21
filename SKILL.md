@@ -1,6 +1,6 @@
 ---
-name: swift-cleaner-lite
-description: Use this skill when the user wants to analyze, clean, or refactor Swift code using idiomatic Swift best practices. Triggers include "clean this Swift file", "refactor Swift", "make this more idiomatic", or any request to improve Swift code quality. Applies seven rules — var→let, private(set), didSet refactor, class→struct, private funcs, private-helpers extension, public-APIs extension — one at a time, always asking before each change.
+name: swift-code-organizer
+description: Use this skill when the user wants to organize Swift code using idiomatic Swift best practices. Triggers include "organize this Swift file", "make this more organized", or any request to improve Swift code quality. Applies seven rules — var→let, private(set), didSet refactor, class→struct, private funcs, private-helpers extension, public-APIs extension — one at a time, always asking before each change.
 ---
 
 ## When To Use
@@ -51,7 +51,14 @@ Refactor:
 - If the function has no remaining logic, delete the function entirely
 - Ask: "Function `funcName` only updates `varName` and reacts to it. Move to `didSet` and remove function?"
 
-### Rule 4 — `class` → `struct`
+### Rule 4 — singleton refactor
+Detect any singleton by:
+- If the class has a static variable that is the instance of the class
+
+Action:
+- make the init function private if it is public
+
+### Rule 5 — `class` → `struct`
 Detect any `class` that:
 - Has no variables that are ever mutated after initialization
 - Has only an initializer (no other methods, or only computed properties)
@@ -60,7 +67,7 @@ Detect any `class` that:
 Convert it to a `struct`.
 - Ask: "Class `ClassName` behaves like a value type. Convert to `struct`?"
 
-### Rule 5 — `func` → `private func`
+### Rule 6 — `func` → `private func`
 Detect any function that:
 - Is never called from outside its own class/struct/file
 - Is not part of a protocol conformance
@@ -69,7 +76,7 @@ Detect any function that:
 Mark it `private`.
 - Ask: "Function `funcName` is only used internally. Add `private`?"
 
-### Rule 6 — extract private helpers into `// MARK: private helpers` extension
+### Rule 7 — extract private helpers into `// MARK: private helpers` extension
 For each class/struct, collect all `private` functions that are **not already inside another extension**.
 Move them into a single new extension:
 
@@ -86,7 +93,7 @@ Constraints:
 - Preserve original order
 - Ask: "Move X private funcs from `ClassName` body into `// MARK: private helpers` extension?"
 
-### Rule 7 — extract public APIs into `// MARK: public APIs` extension
+### Rule 8 — extract public APIs into `// MARK: public APIs` extension
 For each class/struct, collect all `public`/`open`/default-internal functions intended as the type's public surface (non-private, non-fileprivate) that are **not already inside another extension**.
 Move them into a single new extension:
 
